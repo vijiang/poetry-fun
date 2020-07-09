@@ -19,23 +19,22 @@ def access_page_data(url):
         PROGRAM_CACHE.set(url, page_data, expire_in_days=60)
     return page_data
 
-poem_page = access_page_data(url)
-soup = BeautifulSoup(poem_page, "html.parser")
-poem_text = soup.find('div', {'class': 'o-poem'})
+def create_tokens_from_text():    
+    poem_page = access_page_data(url)
+    soup = BeautifulSoup(poem_page, "html.parser")
+    poem_text = soup.find('div', {'class': 'o-poem'})
 
-all_poem_text = ""
-for line in poem_text.strings:
-    # print(line)
-    all_poem_text+=line
+    all_poem_text = ""
+    for line in poem_text.strings:
+        # print(line)
+        all_poem_text+=line
+    tokenized_poem = all_poem_text.split()
 
-tokenized_poem = all_poem_text.split()
-print(tokenized_poem)
+    return tokenized_poem
 
-count = 0
-for item in tokenized_poem:
-    if item == " ":
-        count+=1
-print(count)
 
+if __name__ == "__main__":
+
+    print(len(create_tokens_from_text()))
 
 
